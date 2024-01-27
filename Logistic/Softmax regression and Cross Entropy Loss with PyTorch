@@ -1,0 +1,273 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNcZ/wlnPDh/oAOnquZYC8T",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/MinhajurRFahad/Pytorch/blob/main/Logistic/Softmax%20regression%20and%20Cross%20Entropy%20Loss%20with%20PyTorch\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Step 1: Reading the dataset\n"
+      ],
+      "metadata": {
+        "id": "_J40uI04CeCt"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "jWXCedOwB7t_"
+      },
+      "outputs": [],
+      "source": [
+        "import torch\n",
+        "import torchvision\n",
+        "from torch.utils import data\n",
+        "from torchvision import transforms"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!git clone https://github.com/zalandoresearch/fashion-mnist.git"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "2hwsOeRyDqV6",
+        "outputId": "d04eb779-7dae-45c7-e17c-f8b16e8676d0"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cloning into 'fashion-mnist'...\n",
+            "remote: Enumerating objects: 762, done.\u001b[K\n",
+            "remote: Counting objects: 100% (4/4), done.\u001b[K\n",
+            "remote: Compressing objects: 100% (4/4), done.\u001b[K\n",
+            "remote: Total 762 (delta 0), reused 3 (delta 0), pack-reused 758\u001b[K\n",
+            "Receiving objects: 100% (762/762), 105.85 MiB | 34.60 MiB/s, done.\n",
+            "Resolving deltas: 100% (444/444), done.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def load_data_fashion_mnist(batch_size, resize=None):\n",
+        "  trans = [transform.ToTensor()]\n",
+        "  if resize:\n",
+        "    trans.insert(0, transforms.Compose())"
+      ],
+      "metadata": {
+        "id": "_Fm5AVgQCyMM"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "cd /content/fashion-mnist/data"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "c8JfQWIkHhPy",
+        "outputId": "0cec3fb5-37bc-424c-a8f1-c1fc593e2f20"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "/content/fashion-mnist/data\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!ls"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QfYMHiaNHvDz",
+        "outputId": "8721b2a5-eb98-41cc-fafc-2940e4047cf4"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "fashion  mnist\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "def load_data_fashion_mnist(batch_size, resize=None):\n",
+        "\n",
+        "  trans [transforms.ToTensor()]\n",
+        "if resize:\n",
+        "    trans.insert(0, transforms.Resize(resize))\n",
+        "trans = transforms.Compose(trans)\n",
+        "mnist_train = torchvision.datasets.FashionMNIST(root=\"/content/fashion-mnist/data\",\n",
+        "                                                train=True,\n",
+        "                                                transform=trans,\n",
+        "                                                download=True)\n",
+        "mnist_test torchvision.datasets.FashionMNIST(root=\"/content/fashion-mnist/data\",\n",
+        "                                             train=False,\n",
+        "                                             transform=trans,\n",
+        "                                             download=True)\n",
+        "return (data. DataLoader(mnist_train, batch_size, shuffle=True,\n",
+        "                         num_workers get_dataloader_workers()),\n",
+        "         data. DataLoader(mnist_test, batch_size, shuffle=False,\n",
+        "                          num_workers=get_dataloader_workers()))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 159
+        },
+        "id": "Oo0RSHQ2E5Cy",
+        "outputId": "ebcbf66e-c7d8-46c9-d379-22a243a0fc72"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "SyntaxError",
+          "evalue": "invalid syntax (<ipython-input-12-9ad000581a62>, line 11)",
+          "traceback": [
+            "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-12-9ad000581a62>\"\u001b[0;36m, line \u001b[0;32m11\u001b[0m\n\u001b[0;31m    mnist_test torchvision.datasets.FashionMNIST(root=\"/content/fashion-mnist/data\",\u001b[0m\n\u001b[0m               ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "train_iter, test_iter = load_data_fashion_mnist(32)\n",
+        "for X,y in train_iter:\n",
+        "  print(X.shape, X.shape, y.shape, y.dtype)\n",
+        "  break"
+      ],
+      "metadata": {
+        "id": "_4xpiIMrH7TU"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Step 2: Defining the model"
+      ],
+      "metadata": {
+        "id": "w3y1CljCK-Qr"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from torch import nn\n",
+        "net = nn. Sequential (nn. Flatten(), nn. Linear(784, 10))\n",
+        "def init_weights(m): if type(m) == nn.Linear: nn.init.normal_(m.weight, std=0.01)\n",
+        "net.apply(init_weights);"
+      ],
+      "metadata": {
+        "id": "jk32l61OIUPf"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "loss = nn.CrossEntropyLoss()\n",
+        "trainer = torch.SGD(net.parameters(), lr=0.1)"
+      ],
+      "metadata": {
+        "id": "TXROWOj-LJYs"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Step 4: Training"
+      ],
+      "metadata": {
+        "id": "HK1Gf48mLhQM"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def accuracy(y_hat, y):\n",
+        "\"\"\"\"Compute the number of correct predictions.\"\"\"\n",
+        "if len(y_hat.shape) > 1 and y_hat.shape[1] > 1:\n",
+        "    y_hat = y_hat.argmax(axis=1)\n",
+        "cmp = y_hat.type(y.dtype) == y\n",
+        "#loss = nn.CrossEntropyLoss()\n",
+        "#trainer torch.optim.SGD(net.parameters(), lr=0.1)\n",
+        "return float(cmp.type(y.dtype).sum())\n",
+        "\n",
+        "              num_epochs = 3\n",
+        "              for epoch in range(num_epochs):\n",
+        "                  for X, y in train_iter:\n",
+        "                      # Compute gradients and update parameters\n",
+        "                      y_hat = net(X)\n",
+        "                      l = loss(y_hat, y)\n",
+        "                      trainer.zero_grad()\n",
+        "                      l.backward()\n",
+        "                      trainer.step()\n",
+        "                  acc = accuracy(net(X), y)\n",
+        "                  print(f'epoch {epoch + 1}, accuracy {acc}')"
+      ],
+      "metadata": {
+        "id": "bKglUA6eLeJe"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
